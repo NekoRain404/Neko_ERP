@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.ProjectTaskMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.ProjectTask">
+        SELECT pt.id,
+        pt.name,
+        pt.project_id,
+        pp.name AS project_name,
+        pt.user_id,
+        su.name AS user_name,
+        pt.company_id,
+        rc.name AS company_name,
+        pt.date_deadline,
+        pt.stage_id,
+        pt.description,
+        pt.sequence FROM project_task pt
+        LEFT JOIN project_project pp ON pt.project_id = pp.id
+        LEFT JOIN sys_user su ON pt.user_id = su.id
+        LEFT JOIN res_company rc ON pt.company_id = rc.id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (pt.name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.projectName != null and query.projectName != ''">
+                AND pp.name ILIKE CONCAT('%', #{query.projectName}, '%')
+            </if>
+            <if test="query.userName != null and query.userName != ''">
+                AND su.name ILIKE CONCAT('%', #{query.userName}, '%')
+            </if>
+            <if test="query.companyName != null and query.companyName != ''">
+                AND rc.name ILIKE CONCAT('%', #{query.companyName}, '%')
+            </if>
+        </where>
+        ORDER BY pt.id DESC
+    </select>
+</mapper>

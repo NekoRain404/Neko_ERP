@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.CrmStageMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.CrmStage">
+        SELECT id,
+        name,
+        sequence,
+        is_won FROM crm_stage
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

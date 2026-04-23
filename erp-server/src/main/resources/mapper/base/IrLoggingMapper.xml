@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.IrLoggingMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.IrLogging">
+        SELECT id,
+        create_date,
+        type,
+        name,
+        level,
+        message,
+        path,
+        line,
+        func,
+        metadata,
+        res_model,
+        res_id,
+        user_id FROM ir_logging
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR message ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR res_model ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.sinceId != null">
+                AND id &gt; #{query.sinceId}
+            </if>
+            <if test="query.type != null and query.type != ''">
+                AND type = #{query.type}
+            </if>
+            <if test="query.resModel != null and query.resModel != ''">
+                AND res_model = #{query.resModel}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

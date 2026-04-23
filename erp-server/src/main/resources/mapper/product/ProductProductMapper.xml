@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.product.mapper.ProductProductMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.product.entity.ProductProduct">
+        SELECT
+            p.id,
+            p.product_tmpl_id AS productTmplId,
+            p.default_code AS defaultCode,
+            p.barcode,
+            p.active
+        FROM product_product p
+        LEFT JOIN product_template pt ON pt.id = p.product_tmpl_id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    p.default_code ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR p.barcode ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR pt.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.defaultCode != null and query.defaultCode != ''">
+                AND p.default_code ILIKE CONCAT('%', #{query.defaultCode}, '%')
+            </if>
+            <if test="query.barcode != null and query.barcode != ''">
+                AND p.barcode ILIKE CONCAT('%', #{query.barcode}, '%')
+            </if>
+            <if test="query.productTmplId != null">
+                AND p.product_tmpl_id = #{query.productTmplId}
+            </if>
+            <if test="query.productTmplName != null and query.productTmplName != ''">
+                AND pt.name ILIKE CONCAT('%', #{query.productTmplName}, '%')
+            </if>
+            <if test="query.active != null">
+                AND p.active = #{query.active}
+            </if>
+        </where>
+        ORDER BY p.id DESC
+    </select>
+</mapper>

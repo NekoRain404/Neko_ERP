@@ -1,0 +1,7 @@
+ALTER TABLE stock_picking ADD COLUMN IF NOT EXISTS location_id INTEGER;
+ALTER TABLE stock_picking ADD COLUMN IF NOT EXISTS location_dest_id INTEGER;
+
+ALTER TABLE stock_move ADD COLUMN IF NOT EXISTS origin_ref VARCHAR(256);
+ALTER TABLE stock_move ADD COLUMN IF NOT EXISTS source_line_ref VARCHAR(256);
+
+ALTER TABLE account_payment ADD COLUMN IF NOT EXISTS origin_ref VARCHAR(256);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.mrp.mapper.MrpBomMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.mrp.entity.MrpBom">
+        SELECT id,
+        name,
+        product_tmpl_id,
+        product_id,
+        code,
+        product_qty,
+        company_id FROM mrp_bom
+        <where>
+            <if test="query.productTmplId != null">
+                AND product_tmpl_id = #{query.productTmplId}
+            </if>
+            <if test="query.productId != null">
+                AND product_id = #{query.productId}
+            </if>
+            <if test="query.companyId != null">
+                AND company_id = #{query.companyId}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR code ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

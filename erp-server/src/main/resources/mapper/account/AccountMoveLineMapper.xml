@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.account.mapper.AccountMoveLineMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.account.entity.AccountMoveLine">
+        SELECT *
+        FROM account_move_line
+        <where>
+            <if test="query.id != null">
+                AND id = #{query.id}
+            </if>
+            <if test="query.moveId != null">
+                AND move_id = #{query.moveId}
+            </if>
+            <if test="query.accountId != null">
+                AND account_id = #{query.accountId}
+            </if>
+            <if test="query.productId != null">
+                AND product_id = #{query.productId}
+            </if>
+            <if test="query.reconciled != null and query.reconciled != ''">
+                AND reconciled = #{query.reconciled}
+            </if>
+            <if test="query.paymentRef != null and query.paymentRef != ''">
+                AND payment_ref = #{query.paymentRef}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR payment_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

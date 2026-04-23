@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.account.mapper.AccountMoveMapper">
+    <resultMap id="AccountMoveResultMap" type="com.erp.server.modules.account.entity.AccountMove">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="ref" column="ref" />
+        <result property="state" column="state" />
+        <result property="moveType" column="move_type" />
+        <result property="date" column="date" />
+        <result property="partnerId" column="partner_id" />
+        <result property="journalId" column="journal_id" />
+        <result property="reversedEntryRef" column="reversed_entry_ref" />
+        <result property="reversedFromRef" column="reversed_from_ref" />
+        <result property="companyId" column="company_id" />
+        <result property="amountTotal" column="amount_total" />
+        <result property="extData" column="ext_data" typeHandler="com.erp.server.common.typehandler.JsonbMapTypeHandler" />
+    </resultMap>
+
+    <select id="selectPageByQuery" resultMap="AccountMoveResultMap">
+        SELECT id, name, ref, state, move_type, date, partner_id, journal_id, reversed_entry_ref, reversed_from_ref, company_id, amount_total, ext_data
+        FROM account_move
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR reversed_entry_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR reversed_from_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.ref != null and query.ref != ''">
+                AND ref = #{query.ref}
+            </if>
+            <if test="query.partnerId != null">
+                AND partner_id = #{query.partnerId}
+            </if>
+            <if test="query.journalId != null">
+                AND journal_id = #{query.journalId}
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+            <if test="query.date != null">
+                AND DATE(date) = #{query.date}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

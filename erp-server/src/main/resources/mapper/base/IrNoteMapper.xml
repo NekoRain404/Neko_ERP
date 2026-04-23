@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.IrNoteMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.IrNote">
+        SELECT id, create_date, res_model, res_id, content, author_name, user_id
+        FROM ir_note
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    content ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR author_name ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.resModel != null and query.resModel != ''">
+                AND res_model = #{query.resModel}
+            </if>
+            <if test="query.resId != null">
+                AND res_id = #{query.resId}
+            </if>
+        </where>
+        ORDER BY create_date DESC, id DESC
+    </select>
+</mapper>

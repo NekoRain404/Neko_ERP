@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.account.mapper.AccountPaymentMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.account.entity.AccountPayment">
+        SELECT id,
+        name,
+        state,
+        payment_type,
+        partner_id,
+        amount,
+        currency_id,
+        date,
+        journal_id,
+        memo,
+        invoice_ref,
+        origin_ref,
+        journal_entry_ref,
+        company_id FROM account_payment
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR memo ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR invoice_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR origin_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR journal_entry_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.paymentType != null and query.paymentType != ''">
+                AND payment_type = #{query.paymentType}
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+            <if test="query.invoiceRef != null and query.invoiceRef != ''">
+                AND invoice_ref = #{query.invoiceRef}
+            </if>
+            <if test="query.originRef != null and query.originRef != ''">
+                AND origin_ref = #{query.originRef}
+            </if>
+            <if test="query.journalEntryRef != null and query.journalEntryRef != ''">
+                AND journal_entry_ref = #{query.journalEntryRef}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

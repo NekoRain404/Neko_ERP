@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.product.mapper.ProductPricelistMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.product.entity.ProductPricelist">
+        SELECT
+            p.id,
+            p.name,
+            p.active,
+            p.currency_id AS currencyId,
+            p.company_id AS companyId
+        FROM product_pricelist p
+        LEFT JOIN res_currency rcur ON rcur.id = p.currency_id
+        LEFT JOIN res_company rco ON rco.id = p.company_id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    p.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rcur.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rcur.symbol ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rco.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND p.name ILIKE CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.active != null">
+                AND p.active = #{query.active}
+            </if>
+            <if test="query.currencyId != null">
+                AND p.currency_id = #{query.currencyId}
+            </if>
+            <if test="query.currencyName != null and query.currencyName != ''">
+                AND (
+                    rcur.name ILIKE CONCAT('%', #{query.currencyName}, '%')
+                    OR rcur.symbol ILIKE CONCAT('%', #{query.currencyName}, '%')
+                )
+            </if>
+            <if test="query.companyId != null">
+                AND p.company_id = #{query.companyId}
+            </if>
+            <if test="query.companyName != null and query.companyName != ''">
+                AND rco.name ILIKE CONCAT('%', #{query.companyName}, '%')
+            </if>
+        </where>
+        ORDER BY p.id DESC
+    </select>
+</mapper>

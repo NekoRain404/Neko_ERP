@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.stock.mapper.StockMoveMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.stock.entity.StockMove">
+        SELECT *
+        FROM stock_move
+        <where>
+            <if test="query.id != null">
+                AND id = #{query.id}
+            </if>
+            <if test="query.pickingId != null">
+                AND picking_id = #{query.pickingId}
+            </if>
+            <if test="query.productionId != null">
+                AND production_id = #{query.productionId}
+            </if>
+            <if test="query.productId != null">
+                AND product_id = #{query.productId}
+            </if>
+            <if test="query.originRef != null and query.originRef != ''">
+                AND origin_ref = #{query.originRef}
+            </if>
+            <if test="query.sourceLineRef != null and query.sourceLineRef != ''">
+                AND source_line_ref = #{query.sourceLineRef}
+            </if>
+            <if test="query.moveRole != null and query.moveRole != ''">
+                AND move_role = #{query.moveRole}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR origin_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR source_line_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

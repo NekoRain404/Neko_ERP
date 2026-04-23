@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.product.mapper.ProductTemplateMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.product.entity.ProductTemplate">
+        SELECT pt.id,
+        pt.name,
+        pt.type,
+        pt.categ_id,
+        pt.list_price,
+        pt.standard_price,
+        pt.default_code,
+        pt.barcode,
+        pt.active,
+        pt.company_id,
+        pt.description
+        FROM product_template pt
+        LEFT JOIN product_category pc ON pc.id = pt.categ_id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    pt.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR pt.default_code ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR pt.barcode ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR pc.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND pt.name ILIKE CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.defaultCode != null and query.defaultCode != ''">
+                AND pt.default_code ILIKE CONCAT('%', #{query.defaultCode}, '%')
+            </if>
+            <if test="query.categName != null and query.categName != ''">
+                AND pc.name ILIKE CONCAT('%', #{query.categName}, '%')
+            </if>
+            <if test="query.companyId != null">
+                AND pt.company_id = #{query.companyId}
+            </if>
+            <if test="query.active != null">
+                AND pt.active = #{query.active}
+            </if>
+        </where>
+        ORDER BY pt.id DESC
+    </select>
+</mapper>

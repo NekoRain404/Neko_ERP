@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.stock.mapper.StockPickingMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.stock.entity.StockPicking">
+        SELECT id, name, state, partner_id, origin, scheduled_date, date_done, location_id, location_dest_id, company_id
+        FROM stock_picking
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR origin ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.partnerId != null">
+                AND partner_id = #{query.partnerId}
+            </if>
+            <if test="query.locationId != null">
+                AND location_id = #{query.locationId}
+            </if>
+            <if test="query.locationDestId != null">
+                AND location_dest_id = #{query.locationDestId}
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+            <if test="query.scheduledDate != null">
+                AND DATE(scheduled_date) = #{query.scheduledDate}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

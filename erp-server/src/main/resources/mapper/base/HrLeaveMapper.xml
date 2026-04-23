@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.HrLeaveMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.HrLeave">
+        SELECT hl.id,
+        hl.name,
+        hl.employee_id,
+        he.name AS employee_name,
+        hl.holiday_status_id,
+        hl.date_from,
+        hl.date_to,
+        hl.number_of_days,
+        hl.state FROM hr_leave hl
+        LEFT JOIN hr_employee he ON hl.employee_id = he.id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (hl.name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.employeeName != null and query.employeeName != ''">
+                AND he.name ILIKE CONCAT('%', #{query.employeeName}, '%')
+            </if>
+        </where>
+        ORDER BY hl.id DESC
+    </select>
+</mapper>

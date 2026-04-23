@@ -1,0 +1,322 @@
+:root,
+html[data-theme='light'] {
+  --app-font: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --app-bg: #f5f6f8;
+  --app-surface: #f7f8fa;
+  --app-sidebar: #ffffff;
+  --app-panel: #ffffff;
+  --app-panel-elevated: #ffffff;
+  --app-backdrop: color-mix(in srgb, #ffffff 86%, transparent);
+  --app-muted-bg: #f1f4f8;
+  --app-hover: rgba(30, 41, 59, 0.05);
+  --app-border: rgba(15, 23, 42, 0.08);
+  --app-border-strong: rgba(15, 23, 42, 0.14);
+  --app-text: #172033;
+  --app-text-secondary: #667085;
+  --app-primary: #2f6df6;
+  --app-ring: rgba(47, 109, 246, 0.16);
+  --app-success: #0f9b63;
+  --app-warning: #d97706;
+  --app-danger: #dc4c64;
+  --app-card-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme='dark'] {
+  --app-bg: #0e141b;
+  --app-surface: #111922;
+  --app-sidebar: #121b24;
+  --app-panel: #151f2a;
+  --app-panel-elevated: #182331;
+  --app-backdrop: color-mix(in srgb, #111922 88%, transparent);
+  --app-muted-bg: #1a2532;
+  --app-hover: rgba(255, 255, 255, 0.06);
+  --app-border: rgba(148, 163, 184, 0.16);
+  --app-border-strong: rgba(148, 163, 184, 0.28);
+  --app-text: #e5edf7;
+  --app-text-secondary: #94a3b8;
+  --app-primary: #72a2ff;
+  --app-ring: rgba(114, 162, 255, 0.14);
+  --app-success: #44c78b;
+  --app-warning: #f2aa4c;
+  --app-danger: #ff7b8d;
+  --app-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme='eye'] {
+  --app-bg: #eef4ea;
+  --app-surface: #f3f7ef;
+  --app-sidebar: #f8fbf4;
+  --app-panel: #fbfcf8;
+  --app-panel-elevated: #ffffff;
+  --app-backdrop: color-mix(in srgb, #f8fbf4 88%, transparent);
+  --app-muted-bg: #e8efe0;
+  --app-hover: rgba(67, 102, 61, 0.08);
+  --app-border: rgba(61, 85, 57, 0.12);
+  --app-border-strong: rgba(61, 85, 57, 0.18);
+  --app-text: #1f3423;
+  --app-text-secondary: #5f735f;
+  --app-primary: #4f7a45;
+  --app-ring: rgba(79, 122, 69, 0.14);
+  --app-success: #397b53;
+  --app-warning: #b7791f;
+  --app-danger: #c0565f;
+  --app-card-shadow: 0 12px 28px rgba(52, 71, 52, 0.06);
+}
+
+html[data-theme='custom'] {
+  --app-bg: var(--user-app-bg);
+  --app-surface: var(--user-app-surface);
+  --app-sidebar: var(--user-app-sidebar);
+  --app-panel: var(--user-app-panel);
+  --app-panel-elevated: var(--user-app-panel-elevated);
+  --app-backdrop: color-mix(in srgb, var(--user-app-panel) 88%, transparent);
+  --app-muted-bg: var(--user-app-muted-bg);
+  --app-hover: var(--user-app-hover);
+  --app-border: var(--user-app-border);
+  --app-border-strong: var(--user-app-border-strong);
+  --app-text: var(--user-app-text);
+  --app-text-secondary: var(--user-app-text-secondary);
+  --app-primary: var(--user-app-primary);
+  --app-ring: var(--user-app-ring);
+  --app-success: var(--user-app-success);
+  --app-warning: var(--user-app-warning);
+  --app-danger: var(--user-app-danger);
+  --app-card-shadow: var(--user-app-card-shadow);
+}
+
+html[data-density='compact'] {
+  --app-page-padding: 28px;
+  --app-card-padding: 18px;
+  --app-row-gap: 12px;
+}
+
+html[data-density='comfortable'] {
+  --app-page-padding: 40px;
+  --app-card-padding: 24px;
+  --app-row-gap: 16px;
+}
+
+:root {
+  --app-font-scale: 1;
+  --app-font-size-percent: 100%;
+  --erp-primary: var(--app-primary);
+  --erp-primary-soft: color-mix(in srgb, var(--app-primary) 10%, transparent);
+  --erp-accent: var(--app-primary);
+  --erp-text: var(--app-text);
+  --erp-muted: var(--app-text-secondary);
+  --erp-line: var(--app-border);
+  --mb-bg: var(--app-bg);
+  --mb-sidebar-bg: var(--app-sidebar);
+  --mb-primary: var(--app-primary);
+  --mb-text-main: var(--app-text);
+  --mb-text-sub: var(--app-text-secondary);
+  --mb-border: var(--app-border);
+  --mb-radius: 12px;
+  --mb-font: var(--app-font);
+  --el-color-primary: var(--app-primary);
+  --el-color-success: var(--app-success);
+  --el-color-warning: var(--app-warning);
+  --el-color-danger: var(--app-danger);
+  --el-border-radius-base: 10px;
+  --el-bg-color: var(--app-panel);
+  --el-bg-color-page: var(--app-surface);
+  --el-bg-color-overlay: var(--app-panel-elevated);
+  --el-border-color: var(--app-border);
+  --el-border-color-light: var(--app-border);
+  --el-border-color-lighter: var(--app-border);
+  --el-fill-color-blank: var(--app-panel);
+  --el-fill-color: var(--app-muted-bg);
+  --el-fill-color-light: var(--app-muted-bg);
+  --el-fill-color-lighter: color-mix(in srgb, var(--app-muted-bg) 78%, transparent);
+  --el-fill-color-extra-light: color-mix(in srgb, var(--app-muted-bg) 56%, transparent);
+  --el-fill-color-dark: color-mix(in srgb, var(--app-muted-bg) 88%, var(--app-panel));
+  --el-fill-color-darker: color-mix(in srgb, var(--app-muted-bg) 92%, var(--app-panel));
+  --el-text-color-primary: var(--app-text);
+  --el-text-color-regular: var(--app-text);
+  --el-text-color-secondary: var(--app-text-secondary);
+  --el-text-color-disabled: color-mix(in srgb, var(--app-text-secondary) 78%, transparent);
+  --el-disabled-bg-color: color-mix(in srgb, var(--app-muted-bg) 82%, transparent);
+  --el-disabled-border-color: var(--app-border);
+  --el-mask-color: rgba(11, 18, 32, 0.24);
+  --el-mask-color-extra-light: rgba(11, 18, 32, 0.08);
+  --el-box-shadow-light: var(--app-card-shadow);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  zoom: var(--app-font-scale);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  scrollbar-color: var(--app-border-strong) transparent;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: var(--app-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--app-primary) 18%, transparent);
+}
+
+.erp-card,
+.modern-card,
+.mb-card {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: 16px;
+  box-shadow: var(--app-card-shadow);
+}
+
+.erp-muted {
+  color: var(--app-text-secondary);
+}
+
+.menu-shell {
+  background: var(--app-sidebar) !important;
+  border-right: 1px solid var(--app-border) !important;
+}
+
+.side-item {
+  color: var(--app-text-secondary) !important;
+}
+
+.side-item:hover,
+.side-item.active {
+  background: color-mix(in srgb, var(--app-primary) 8%, transparent) !important;
+  color: var(--app-primary) !important;
+}
+
+body .el-button--primary {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+body .el-tag,
+body .el-button,
+body .el-select__wrapper,
+body .el-input__wrapper,
+body .el-textarea__inner,
+body .el-pagination button,
+body .el-pagination .el-pager li {
+  border-radius: 10px;
+}
+
+body .el-input__wrapper,
+body .el-select__wrapper,
+body .el-textarea__inner {
+  background: var(--app-panel) !important;
+  box-shadow: 0 0 0 1px var(--app-border) inset !important;
+}
+
+body .el-input__wrapper.is-focus,
+body .el-select__wrapper.is-focused,
+body .el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--app-primary) inset !important;
+}
+
+body .el-radio-button__inner {
+  background: var(--app-panel);
+  color: var(--app-text);
+  border-color: var(--app-border-strong);
+}
+
+body .el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background: color-mix(in srgb, var(--app-primary) 10%, transparent);
+  border-color: var(--app-primary);
+  color: var(--app-primary);
+  box-shadow: none;
+}
+
+body .el-table {
+  --el-table-border-color: var(--app-border);
+  --el-table-header-bg-color: color-mix(in srgb, var(--app-muted-bg) 72%, transparent);
+  --el-table-tr-bg-color: var(--app-panel);
+  --el-table-row-hover-bg-color: var(--app-hover);
+  background: var(--app-panel);
+  color: var(--app-text);
+}
+
+body .el-tabs--border-card {
+  border-color: var(--app-border);
+}
+
+body .el-tabs--border-card > .el-tabs__header {
+  background: var(--app-muted-bg);
+  border-bottom-color: var(--app-border);
+}
+
+body .el-select-dropdown,
+body .el-dropdown-menu,
+body .el-picker-panel,
+body .el-popover,
+body .el-message,
+body .el-popper.is-light {
+  background: var(--app-panel-elevated);
+  border-color: var(--app-border);
+  color: var(--app-text);
+  box-shadow: var(--app-card-shadow);
+}
+
+body .el-select-dropdown__item,
+body .el-picker-panel__content,
+body .el-date-table td .el-date-table-cell__text,
+body .el-month-table td .cell,
+body .el-year-table td .cell {
+  color: var(--app-text);
+}
+
+body .el-select-dropdown__item.hover,
+body .el-select-dropdown__item:hover,
+body .el-date-table td.available:hover,
+body .el-month-table td .cell:hover,
+body .el-year-table td .cell:hover {
+  background: var(--app-hover);
+}
+
+body .el-select-dropdown__item.is-selected,
+body .el-date-table td.today .el-date-table-cell__text,
+body .el-date-picker__header-label,
+body .el-picker-panel__icon-btn {
+  color: var(--app-primary);
+}
+
+body .el-message {
+  border-width: 1px;
+}
+
+body .el-switch.is-checked .el-switch__core,
+body .el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+html[data-animations='off'] *,
+html[data-animations='off'] *::before,
+html[data-animations='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

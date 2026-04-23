@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.stock.mapper.StockInventoryLineMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.stock.entity.StockInventoryLine">
+        SELECT id,
+        name,
+        inventory_id,
+        location_id,
+        product_id,
+        product_qty,
+        theoretical_qty,
+        difference_qty,
+        difference_state FROM stock_inventory_line
+        <where>
+            <if test="query.inventoryId != null">
+                AND inventory_id = #{query.inventoryId}
+            </if>
+            <if test="query.locationId != null">
+                AND location_id = #{query.locationId}
+            </if>
+            <if test="query.productId != null">
+                AND product_id = #{query.productId}
+            </if>
+            <if test="query.differenceState != null and query.differenceState != ''">
+                AND difference_state = #{query.differenceState}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

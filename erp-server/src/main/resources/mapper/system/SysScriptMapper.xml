@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.system.mapper.SysScriptMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.system.entity.SysScript">
+        SELECT id, model, event_name, script_lang, script_code, status, remark, create_time, update_time
+        FROM sys_script
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    model ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR event_name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR remark ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.model != null and query.model != ''">
+                AND model = #{query.model}
+            </if>
+            <if test="query.eventName != null and query.eventName != ''">
+                AND event_name = #{query.eventName}
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

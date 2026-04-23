@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.account.mapper.AccountInvoiceMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.account.entity.AccountInvoice">
+        SELECT id,
+        name,
+        partner_id,
+        invoice_date,
+        due_date,
+        state,
+        company_id,
+        amount_untaxed,
+        amount_tax,
+        amount_total,
+        origin_ref,
+        payment_ref,
+        payment_state,
+        create_uid,
+        create_date,
+        write_uid,
+        write_date FROM account_invoice
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR origin_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR payment_ref ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.partnerId != null">
+                AND partner_id = #{query.partnerId}
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+            <if test="query.paymentState != null and query.paymentState != ''">
+                AND payment_state = #{query.paymentState}
+            </if>
+            <if test="query.invoiceDate != null">
+                AND invoice_date = #{query.invoiceDate}
+            </if>
+            <if test="query.dueDate != null">
+                AND due_date = #{query.dueDate}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+appId: com.nekoerp.desktop.client
+productName: NEKO_ERP Client
+executableName: neko-erp-client
+artifactName: NEKO_ERP-Client-v${version}-${os}-${arch}.${ext}
+directories:
+  output: dist-electron-client
+asar: true
+files:
+  - dist/**/*
+  - src-electron/**/*
+  - package.json
+extraResources:
+  - from: build-resources/preview/application-preview.yml.example
+    to: config/application-preview.yml.example
+  - from: build-resources/preview/README.txt
+    to: docs/README.txt
+linux:
+  target:
+    - AppImage
+    - tar.gz
+  category: Office

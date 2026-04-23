@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.IrAttachmentMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.IrAttachment">
+        SELECT id,
+        name,
+        res_model,
+        res_id,
+        datas,
+        mimetype FROM ir_attachment
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.resModel != null and query.resModel != ''">
+                AND (
+                    res_model = #{query.resModel}
+                    <if test="query.resModelAlt != null and query.resModelAlt != ''">
+                        OR res_model = #{query.resModelAlt}
+                    </if>
+                )
+            </if>
+            <if test="query.resId != null">
+                AND res_id = #{query.resId}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

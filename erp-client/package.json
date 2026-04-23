@@ -1,0 +1,83 @@
+{
+  "name": "erp-client",
+  "version": "0.1.0-preview.1",
+  "private": true,
+  "description": "NEKO_ERP desktop preview release",
+  "author": "NEKO_ERP",
+  "license": "GPL-3.0-only",
+  "productName": "NEKO_ERP",
+  "main": "src-electron/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run electron:dev",
+    "web:dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "electron:dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "electron:start": "electron .",
+    "electron:build:dir": "bash ../scripts/electron_preview_build.sh dir",
+    "electron:build:dir:client": "bash ../scripts/electron_preview_build.sh dir client-only",
+    "electron:build:linux": "bash ../scripts/electron_preview_build.sh linux",
+    "electron:build:linux:client": "bash ../scripts/electron_preview_build.sh linux client-only",
+    "release:client": "RELEASE_COMPONENT=client bash ../scripts/release_preview.sh",
+    "release:server": "RELEASE_COMPONENT=server bash ../scripts/release_preview.sh",
+    "release:gate": "RELEASE_GATE=1 bash ../scripts/release_preview.sh",
+    "release:preview": "bash ../scripts/release_preview.sh"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.8.4",
+    "element-plus": "^2.9.8",
+    "pinia": "^3.0.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^35.2.1",
+    "electron-builder": "^26.8.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.1",
+    "vue-tsc": "^2.2.8",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.nekoerp.desktop.preview",
+    "productName": "NEKO_ERP",
+    "executableName": "neko-erp",
+    "artifactName": "NEKO_ERP-v${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "src-electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../erp-server/target/erp-server.jar",
+        "to": "backend/erp-server.jar"
+      },
+      {
+        "from": "build-resources/preview/application-preview.yml.example",
+        "to": "config/application-preview.yml.example"
+      },
+      {
+        "from": "build-resources/preview/README.txt",
+        "to": "docs/README.txt"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
+      "category": "Office"
+    }
+  }
+}

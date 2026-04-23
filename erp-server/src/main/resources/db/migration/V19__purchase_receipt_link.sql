@@ -1,0 +1,1 @@
+ALTER TABLE purchase_order ADD COLUMN IF NOT EXISTS receipt_ref VARCHAR(256);

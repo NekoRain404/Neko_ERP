@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.sale.mapper.SaleOrderLineMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.sale.entity.SaleOrderLine">
+        SELECT *
+        FROM sale_order_line
+        <where>
+            <if test="query.id != null">
+                AND id = #{query.id}
+            </if>
+            <if test="query.orderId != null">
+                AND order_id = #{query.orderId}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

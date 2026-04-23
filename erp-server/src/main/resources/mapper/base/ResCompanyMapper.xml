@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.ResCompanyMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.ResCompany">
+        SELECT
+            c.id,
+            c.name,
+            c.partner_id AS partnerId,
+            c.currency_id AS currencyId,
+            c.active
+        FROM res_company c
+        LEFT JOIN res_currency rcur ON rcur.id = c.currency_id
+        LEFT JOIN res_partner rp ON rp.id = c.partner_id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    c.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rp.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rcur.name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR rcur.symbol ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND c.name ILIKE CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.partnerName != null and query.partnerName != ''">
+                AND rp.name ILIKE CONCAT('%', #{query.partnerName}, '%')
+            </if>
+            <if test="query.currencyId != null">
+                AND c.currency_id = #{query.currencyId}
+            </if>
+            <if test="query.currencyName != null and query.currencyName != ''">
+                AND (
+                    rcur.name ILIKE CONCAT('%', #{query.currencyName}, '%')
+                    OR rcur.symbol ILIKE CONCAT('%', #{query.currencyName}, '%')
+                )
+            </if>
+            <if test="query.active != null">
+                AND c.active = #{query.active}
+            </if>
+        </where>
+        ORDER BY c.id DESC
+    </select>
+</mapper>

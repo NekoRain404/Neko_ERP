@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.ResCurrencyMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.ResCurrency">
+        SELECT
+            id,
+            name,
+            symbol,
+            rounding,
+            decimal_places AS decimalPlaces,
+            active
+        FROM res_currency
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR symbol ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND name ILIKE CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.symbol != null and query.symbol != ''">
+                AND symbol ILIKE CONCAT('%', #{query.symbol}, '%')
+            </if>
+            <if test="query.active != null">
+                AND active = #{query.active}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

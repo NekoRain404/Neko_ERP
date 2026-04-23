@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.account.mapper.AccountJournalMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.account.entity.AccountJournal">
+        SELECT id,
+        name,
+        code,
+        type,
+        company_id,
+        currency_id FROM account_journal
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

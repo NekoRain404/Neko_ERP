@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.system.mapper.SysUserMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.system.entity.SysUser">
+        SELECT id,
+        name,
+        username,
+        real_name,
+        partner_id,
+        status,
+        deleted FROM sys_user
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR username ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR real_name ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.username != null and query.username != ''">
+                AND username ILIKE CONCAT('%', #{query.username}, '%')
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+            <if test="query.deleted != null">
+                AND deleted = #{query.deleted}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

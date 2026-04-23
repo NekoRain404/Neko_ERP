@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.ResPartnerMapper">
+    <resultMap id="ResPartnerResultMap" type="com.erp.server.modules.base.entity.ResPartner">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="type" column="type" />
+        <result property="parentId" column="parent_id" />
+        <result property="active" column="active" />
+        <result property="isCompany" column="is_company" />
+        <result property="userId" column="user_id" />
+        <result property="companyId" column="company_id" />
+        <result property="email" column="email" />
+        <result property="phone" column="phone" />
+        <result property="website" column="website" />
+        <result property="vat" column="vat" />
+        <result property="creditLimit" column="credit_limit" />
+        <result property="comment" column="comment" />
+        <result property="extData" column="ext_data" typeHandler="com.erp.server.common.typehandler.JsonbMapTypeHandler" />
+    </resultMap>
+
+    <select id="selectPageByQuery" resultMap="ResPartnerResultMap">
+        SELECT id,
+        name,
+        type,
+        parent_id,
+        active,
+        is_company,
+        user_id,
+        company_id,
+        email,
+        phone,
+        website,
+        vat,
+        credit_limit,
+        comment,
+        ext_data
+        FROM res_partner
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    name ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR email ILIKE CONCAT('%', #{query.keyword}, '%')
+                    OR phone ILIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND name ILIKE CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.email != null and query.email != ''">
+                AND email ILIKE CONCAT('%', #{query.email}, '%')
+            </if>
+            <if test="query.phone != null and query.phone != ''">
+                AND phone ILIKE CONCAT('%', #{query.phone}, '%')
+            </if>
+            <if test="query.companyId != null">
+                AND company_id = #{query.companyId}
+            </if>
+            <if test="query.active != null">
+                AND active = #{query.active}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

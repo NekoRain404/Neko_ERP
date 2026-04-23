@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.purchase.mapper.PurchaseOrderMapper">
+    <resultMap id="PurchaseOrderResultMap" type="com.erp.server.modules.purchase.entity.PurchaseOrder">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="state" column="state" />
+        <result property="dateOrder" column="date_order" />
+        <result property="partnerId" column="partner_id" />
+        <result property="userId" column="user_id" />
+        <result property="companyId" column="company_id" />
+        <result property="amountUntaxed" column="amount_untaxed" />
+        <result property="amountTax" column="amount_tax" />
+        <result property="amountTotal" column="amount_total" />
+        <result property="receiptRef" column="receipt_ref" />
+        <result property="billRef" column="bill_ref" />
+        <result property="extData" column="ext_data" typeHandler="com.erp.server.common.typehandler.JsonbMapTypeHandler" />
+    </resultMap>
+
+    <select id="selectPageByQuery" resultMap="PurchaseOrderResultMap">
+        SELECT id, name, state, date_order, partner_id, user_id, company_id, amount_untaxed, amount_tax, amount_total, receipt_ref, bill_ref, ext_data
+        FROM purchase_order
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.partnerId != null">
+                AND partner_id = #{query.partnerId}
+            </if>
+            <if test="query.userId != null">
+                AND user_id = #{query.userId}
+            </if>
+            <if test="query.state != null and query.state != ''">
+                AND state = #{query.state}
+            </if>
+            <if test="query.dateOrder != null">
+                AND DATE(date_order) = #{query.dateOrder}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

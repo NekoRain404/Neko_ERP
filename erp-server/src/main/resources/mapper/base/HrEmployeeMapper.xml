@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.server.modules.base.mapper.HrEmployeeMapper">
+    <select id="selectPageByQuery" resultType="com.erp.server.modules.base.entity.HrEmployee">
+        SELECT he.id,
+        he.name,
+        he.job_id,
+        hj.name AS job_name,
+        he.department_id,
+        hd.name AS department_name,
+        he.parent_id,
+        he.user_id,
+        su.name AS user_name,
+        he.company_id,
+        rc.name AS company_name,
+        he.work_email,
+        he.work_phone,
+        he.active FROM hr_employee he
+        LEFT JOIN hr_job hj ON he.job_id = hj.id
+        LEFT JOIN hr_department hd ON he.department_id = hd.id
+        LEFT JOIN sys_user su ON he.user_id = su.id
+        LEFT JOIN res_company rc ON he.company_id = rc.id
+        <where>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (he.name ILIKE CONCAT('%', #{query.keyword}, '%'))
+            </if>
+            <if test="query.jobName != null and query.jobName != ''">
+                AND hj.name ILIKE CONCAT('%', #{query.jobName}, '%')
+            </if>
+            <if test="query.departmentName != null and query.departmentName != ''">
+                AND hd.name ILIKE CONCAT('%', #{query.departmentName}, '%')
+            </if>
+            <if test="query.userName != null and query.userName != ''">
+                AND su.name ILIKE CONCAT('%', #{query.userName}, '%')
+            </if>
+            <if test="query.companyName != null and query.companyName != ''">
+                AND rc.name ILIKE CONCAT('%', #{query.companyName}, '%')
+            </if>
+        </where>
+        ORDER BY he.id DESC
+    </select>
+</mapper>
